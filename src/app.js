@@ -8,6 +8,9 @@ import { notFound } from './middlewares/notFound.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { setupSwagger } from './docs/swagger.js';
 
+//  import rate limiter middleware
+import { apiLimiter } from './middlewares/rateLimiter.js';
+
 const app = express();
 
 // Core middlewares
@@ -16,12 +19,14 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
+// Apply rate limiting globally (before routes)
+app.use(apiLimiter);
+
+// Setup Swagger Docs
 setupSwagger(app);
+
 // Routes
 app.use('/', routes);
-
-// API Docs (Swagger)
-
 
 // 404 + Error handlers
 app.use(notFound);
