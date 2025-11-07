@@ -4,7 +4,7 @@ import healthRoutes from './health.routes.js';
 
 const router = Router();
 
-router.use('/auth', authRoutes);
+router.use('/api/auth', authRoutes);
 router.use('/', healthRoutes); // GET /health
 
 export default router;
