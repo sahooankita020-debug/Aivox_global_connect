@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import { supabase } from '../config/supabaseClient.js';
+import { supabase , } from '../config/supabaseClient.js';
 import { signJwt } from '../utils/jwt.js';
 
 const ROLES = ['candidate','recruiter','business'];

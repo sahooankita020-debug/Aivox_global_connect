@@ -1,24 +1,29 @@
-import swaggerJsdoc from 'swagger-jsdoc';
-import swaggerUi from 'swagger-ui-express';
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 
 const options = {
   definition: {
-    openapi: '3.0.3',
+    openapi: "3.0.3",
     info: {
-      title: 'Aivox Global Connect API',
-      version: '1.0.0',
-      description: 'Backend API documentation for Aivox Global Connect',
+      title: "Aivox Global Connect API",
+      version: "1.0.0",
+      description: "Backend API documentation for Aivox Global Connect",
     },
-    servers: [{ url: 'http://localhost:3000' }],
+
+    servers: [
+      { url: "http://localhost:3000" }    // LOCAL SERVER
+    ],
+
     components: {
       securitySchemes: {
         bearerAuth: {
-          type: 'http',
-          scheme: 'bearer',
-          bearerFormat: 'JWT'
-        }
-      }
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
     },
+
     paths: {
       "/auth/register": {
         post: {
@@ -36,16 +41,14 @@ const options = {
                     last_name: { type: "string" },
                     email: { type: "string" },
                     password: { type: "string" },
-                    user_type: { type: "string", default: "candidate" }
-                  }
-                }
-              }
-            }
+                    user_type: { type: "string", default: "candidate" },
+                  },
+                },
+              },
+            },
           },
-          responses: {
-            201: { description: "Successfully registered" }
-          }
-        }
+          responses: { 201: { description: "Successfully registered" } },
+        },
       },
 
       "/auth/login": {
@@ -61,14 +64,14 @@ const options = {
                   required: ["email", "password"],
                   properties: {
                     email: { type: "string" },
-                    password: { type: "string" }
-                  }
-                }
-              }
-            }
+                    password: { type: "string" },
+                  },
+                },
+              },
+            },
           },
-          responses: { 200: { description: "Login success" } }
-        }
+          responses: { 200: { description: "Login success" } },
+        },
       },
 
       "/auth/logout": {
@@ -76,16 +79,30 @@ const options = {
           tags: ["Auth"],
           summary: "Logout user",
           security: [{ bearerAuth: [] }],
-          responses: { 200: { description: "Logout successfully" } }
-        }
+          responses: { 200: { description: "Logout successfully" } },
+        },
       },
 
       "/auth/forgot-password": {
         post: {
           tags: ["Auth"],
           summary: "Request reset token",
-          responses: { 200: { description: "Reset token created" } }
-        }
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  required: ["email"],
+                  properties: {
+                    email: { type: "string" },
+                  },
+                },
+              },
+            },
+          },
+          responses: { 200: { description: "Reset token created" } },
+        },
       },
 
       "/auth/reset-password": {
@@ -101,23 +118,23 @@ const options = {
                   required: ["token", "new_password"],
                   properties: {
                     token: { type: "string" },
-                    new_password: { type: "string" }
-                  }
-                }
-              }
-            }
+                    new_password: { type: "string" },
+                  },
+                },
+              },
+            },
           },
-          responses: { 200: { description: "Password reset success" } }
-        }
-      }
-    }
+          responses: { 200: { description: "Password reset success" } },
+        },
+      },
+    },
   },
-  apis: []
+
+  apis: [],
 };
 
 const specs = swaggerJsdoc(options);
 
 export function setupSwagger(app) {
-  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(specs));
+  app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(specs));
 }
-

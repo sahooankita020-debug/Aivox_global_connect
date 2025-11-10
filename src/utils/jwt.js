@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 
+
 const SECRET = process.env.JWT_SECRET;
 const EXPIRES = process.env.JWT_EXPIRES_IN || '7d';
 
