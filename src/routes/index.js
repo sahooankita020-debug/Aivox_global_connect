@@ -5,7 +5,7 @@ import profileRoutes from './profile.routes.js';
 
 const router = Router();
 
-router.use('/api/auth', authRoutes);
+router.use('/auth', authRoutes);
 router.use('/', healthRoutes); // GET /health
 router.use('/api', profileRoutes); 
 
