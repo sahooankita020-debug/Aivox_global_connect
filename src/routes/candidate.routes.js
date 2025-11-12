@@ -1,16 +1,15 @@
 import { Router } from "express";
-import { addCandidate, listCandidates, addApplication } from "../controllers/candidate.controller.js";
+
 import { requireAuth } from "../middlewares/auth.js";
+import { validateCandidate } from "../middlewares/validation.js";
+import { createCandidateCtrl, getAllCandidatesCtrl } from "../controllers/candidate.controller.js";
 
 const router = Router();
 
-// ✅ Create candidate
-router.post("/candidates", requireAuth, addCandidate);
+// ✅ Create new candidate
+router.post("/", requireAuth, validateCandidate, createCandidateCtrl);
 
-// ✅ Get all candidates
-router.get("/candidates", requireAuth, listCandidates);
-
-// ✅ Create Application for a specific Candidate
-router.post("/candidates/:id/applications", requireAuth, addApplication);
+// ✅ Get all candidates (user-specific)
+router.get("/", requireAuth, getAllCandidatesCtrl);
 
 export default router;

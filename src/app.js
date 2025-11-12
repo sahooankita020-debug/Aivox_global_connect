@@ -15,7 +15,12 @@ const app = express();
 
 // Core middlewares
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:5173", "https://aivox-frontend.vercel.app"],
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(morgan('dev'));
 
