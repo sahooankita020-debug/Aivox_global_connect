@@ -253,6 +253,103 @@ const options = {
           },
         },
       },
+
+      // ✅ CANDIDATE ROUTES
+      "/api/candidates": {
+        post: {
+          tags: ["Candidates"],
+          summary: "Create a new candidate",
+          security: [{ bearerAuth: [] }],
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  required: ["first_name", "last_name", "email"],
+                  properties: {
+                    first_name: { type: "string" },
+                    last_name: { type: "string" },
+                    email: { type: "string" },
+                    skills: { type: "string" },
+                    experience: { type: "number" },
+                  },
+                  example: {
+                    first_name: "Suman",
+                    last_name: "Kumar",
+                    email: "suman@example.com",
+                    skills: "React, Node.js, MongoDB",
+                    experience: 2,
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            201: { description: "Candidate created successfully" },
+            400: { description: "Invalid request" },
+            401: { description: "Unauthorized" },
+          },
+        },
+
+        get: {
+          tags: ["Candidates"],
+          summary: "Get all candidates created by logged in user",
+          security: [{ bearerAuth: [] }],
+          responses: {
+            200: { description: "List of all candidates" },
+            401: { description: "Unauthorized" },
+          },
+        },
+      },
+
+      "/api/candidates/{id}/applications": {
+        post: {
+          tags: ["Applications"],
+          summary: "Create a new application for a candidate",
+          security: [{ bearerAuth: [] }],
+          parameters: [
+            {
+              name: "id",
+              in: "path",
+              required: true,
+              description: "Candidate ID for which application will be created",
+              schema: { type: "string" },
+            },
+          ],
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  required: ["job_id", "position"],
+                  properties: {
+                    job_id: { type: "string" },
+                    position: { type: "string" },
+                    cover_letter: { type: "string" },
+                    resume_link: { type: "string" },
+                    source: { type: "string" },
+                  },
+                  example: {
+                    job_id: "JOB-007",
+                    position: "Frontend Developer",
+                    cover_letter: "I am skilled in React and building UI apps.",
+                    resume_link: "https://example.com/resume.pdf",
+                    source: "LinkedIn",
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            201: { description: "Application created successfully" },
+            400: { description: "Invalid input" },
+            401: { description: "Unauthorized" },
+            404: { description: "Candidate not found" },
+          },
+        },
+      },
     },
   },
 
