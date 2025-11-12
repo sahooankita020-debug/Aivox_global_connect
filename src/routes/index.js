@@ -12,7 +12,7 @@ router.use('/auth', authRoutes);
 router.use('/', healthRoutes); // GET /health
 router.use('/api', profileRoutes); 
 router.use('/api', businessLeadRoutes);
-router.use("/api", candidateRoutes);
+// router.use("/api", candidateRoutes);
 router.use("/api", addApplication);
 
 export default router;
