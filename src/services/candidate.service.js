@@ -13,7 +13,7 @@ export async function createCandidate(userId, candidateData) {
         email,
         skills,
         experience,
-        created_by: userId, // optional if column exists
+        created_by: userId,
       },
     ])
     .select()
@@ -23,6 +23,7 @@ export async function createCandidate(userId, candidateData) {
   return data;
 }
 
+// ✅ Get all candidates for user
 export async function getAllCandidates(userId) {
   const { data, error } = await supabase
     .from("candidates")
@@ -33,8 +34,6 @@ export async function getAllCandidates(userId) {
   if (error) throw new Error(error.message);
   return data;
 }
-
-
 
 // ✅ Create a new application for a candidate
 export async function createApplication(candidateId, userId, appData) {
@@ -50,7 +49,7 @@ export async function createApplication(candidateId, userId, appData) {
         cover_letter,
         resume_link,
         source,
-        applied_by: userId, // jis user ne application banaya
+        applied_by: userId,
       },
     ])
     .select()

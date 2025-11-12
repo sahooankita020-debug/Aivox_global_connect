@@ -1,7 +1,7 @@
 import { createCandidate, getAllCandidates, createApplication } from "../services/candidate.service.js";
 
 // ✅ POST /api/candidates
-export async function addCandidate(req, res) {
+export async function createCandidateCtrl(req, res) {
   try {
     const userId = req.user.id; // requireAuth middleware se milega
     const data = await createCandidate(userId, req.body);
@@ -16,9 +16,8 @@ export async function addCandidate(req, res) {
   }
 }
 
-
 // ✅ GET /api/candidates
-export async function listCandidates(req, res) {
+export async function getAllCandidatesCtrl(req, res) {
   try {
     const userId = req.user.id; // from requireAuth middleware
     const data = await getAllCandidates(userId);
@@ -33,9 +32,8 @@ export async function listCandidates(req, res) {
   }
 }
 
-
 // ✅ POST /api/candidates/:id/applications
-export async function addApplication(req, res) {
+export async function createApplicationCtrl(req, res) {
   try {
     const { id } = req.params;  // Candidate ID
     const userId = req.user.id; // Logged in user ID
