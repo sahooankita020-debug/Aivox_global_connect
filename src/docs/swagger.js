@@ -278,7 +278,7 @@ const options = {
                     first_name: "Suman",
                     last_name: "Kumar",
                     email: "suman@example.com",
-                    skills: "React, Node.js, MongoDB",
+                    skills: ["React, Node.js, MongoDB"],
                     experience: 2,
                   },
                 },
